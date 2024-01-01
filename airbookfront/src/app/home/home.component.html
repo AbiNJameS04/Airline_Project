@@ -1,0 +1,219 @@
+
+ 
+  
+
+
+<div id="booking" class="section">
+  <div class="nav__logo ">AirbooK</div>
+  <div class="section-center">
+    <div class="container">
+      <div class="row">
+        <div class="booking-form">
+         
+            <div class="form-group">
+              <div class="form-checkbox">
+                <label for="roundtrip">
+                  <input type="radio" id="roundtrip" name="flight-type"
+                    (click)="onFlightTypeChange('roundtrip')">
+                  <span></span>Roundtrip
+                </label>
+                <label for="one-way">
+                  <input type="radio" id="one-way" name="flight-type"
+                    (click)="onFlightTypeChange('one-way')">
+                  <span></span>One way
+                </label>
+                <label for="multi-city">
+                  <input type="radio" id="multi-city" name="flight-type"
+                    (click)="onFlightTypeChange('multi-city')">
+                  <span></span>Multi-City
+                </label>
+              </div>
+            </div>
+            <!-- flight-booking.component.html -->
+            <form [formGroup]="searchForm">
+
+            <div class="row">
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+
+                  <span class="form-label">Flying from</span>
+
+                  <input class="form-control" type="text" required
+                   placeholder="City or airport" formControlName="iataFrom" (keyup)="suggestfro()">
+                   <div class="sugesstions" *ngIf="fromsuges.length">
+                    <ul >
+                      <li *ngFor="let s of fromsuges.slice(0, 4)"  (click)="selectFro(s)">
+                        <b>{{ s.name }}</b><br>
+                        {{s.iata_code}}
+                       
+                      </li>
+                    </ul>
+                  </div>
+                  
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+
+                  <span class="form-label">Flying to</span>
+
+                  <input class="form-control" type="text" formControlName="iataTo" 
+                  placeholder="City or airport"  (keyup)="suggestTo()" required>
+                  <div class="sugesstions" *ngIf="tosuges.length">
+                    <ul >
+                      <li *ngFor="let s of tosuges.slice(0,4)" (click)="selectTo(s)">
+                        <b>{{ s.name }} </b><BR>
+                          {{s.iata_code}}
+                       
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+           <div class="col-md-2">
+
+                <div class="form-group">
+
+                  <span class="form-label">Departing</span>
+
+                  <input class="form-control" type="date" required formControlName="date" min="{{ minDate() }}">
+
+                </div>
+
+              </div>
+
+              <div class="col-md-2" *ngIf="selectedFlightType === 'roundtrip'">
+
+                <div class="form-group">
+
+                  <span class="form-label">Returning</span>
+
+                  <input class="form-control" type="date" required formControlName="rdate" min="{{ minDate() }}">
+
+                </div>
+
+              </div>
+
+            </div>
+
+     <div *ngIf="selectedFlightType === 'multi-city'">
+
+              <div class="row"
+                *ngFor="let flight of multiCityFlights; let i = index">
+
+                <div class="col-md-4">
+
+                  <div class="form-group">
+
+                    <span class="form-label">Flying From</span>
+
+                    <input class="form-control" type="text"
+                      placeholder="City or airport" [(ngModel)]="flight.from">
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <div class="form-group">
+
+                    <span class="form-label">Flying To</span>
+
+                    <input class="form-control" type="text"
+                      placeholder="City or airport" [(ngModel)]="flight.to">
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-2">
+
+                  <div class="form-group">
+
+                    <span class="form-label">Departing</span>
+
+                    <input class="form-control" type="date" formControlName="date"
+                      [(ngModel)]="flight.date">
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-2">
+
+                  <div class="form-group">
+
+                    <button class="btn btn-danger rounded-circle"
+                      (click)="removeFlight(i)">X</button>
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-12" *ngIf="i === multiCityFlights.length - 1">
+
+                  <button class="btn btn-primary" (click)="addFlight()">Add
+                    Flight</button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-3">
+
+                <div class="form-group">
+
+                  <span class="form-label">Travel class</span>
+
+                  <select class="form-control" formControlName="classType">
+
+                    <option selected>Economy</option>
+
+                    <option>Business</option>
+
+                    <option>First</option>
+
+                  </select>
+
+                  <span class="select-arrow"></span>
+
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-btn">
+
+                  <button class="submit-btn" (click)="searchF()">Show
+                    Flights</button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

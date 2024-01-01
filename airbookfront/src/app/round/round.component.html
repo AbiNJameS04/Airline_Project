@@ -1,0 +1,36 @@
+
+<body><nav>
+    <div class="nav__logo " routerLink="">AirbooK</div>
+    <!-- <ul class="nav__links">
+      <li class="link"><a href="#">Home</a></li>
+      <li class="link"><a href="#">About</a></li>
+      <li class="link"><a href="#">Login</a></li>
+     
+   </ul> -->
+    <!-- <button class="btn">Login</button> -->
+  </nav>
+
+  <h2>Flights From {{airports}} ({{criteria.iataFrom}}) To {{to}}({{ criteria.iataTo}})</h2>
+    <h2> And {{to}}({{ criteria.iataTo}}) to {{airports}} ({{criteria.iataFrom}})</h2>
+
+  <div id="pricing-table" class="clear">
+    <ng-container *ngIf="airroutes.length > 0; else noFlightsFound">
+        <div class="plan" *ngFor="let r of flightroutes">
+            <h3>{{ airlineDetails.name }}({{ r.airlineIata }})<span><img src={{airlineDetails.logo}} alt="logo" width="50" height="50"></span></h3>
+            <ul>
+                <li><b>From :</b>{{r.iata_from}} </li>
+                <li><b>To  :</b>{{r.iata_to}}</li>
+                <li><b>Max Duration  :</b>{{r.max_duration}} Min</li>
+                <li><b>Min Duration  :</b> {{r.min_duration}} Min </li>			
+            </ul> 
+        </div>
+    </ng-container>
+    <ng-template #noFlightsFound>
+        <div class="no-flights-found">
+            <h2>No flights found.</h2>
+        </div>
+    </ng-template>
+</div>
+  
+
+</body>
